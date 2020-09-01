@@ -3,6 +3,8 @@ const signup_create = (req, res) => {
 }
 
 const signup_store = (req, res) => {
+    const {email, password} = req.body;
+    console.log(email, password);
     res.send('new signup');
 }
 
@@ -11,6 +13,8 @@ const login_get = (req, res) => {
 }
 
 const login_post = (req, res) => {
+    const {email, password} = req.body;
+    console.log(email, password);
     res.send('user login')
 }
 
