@@ -1,11 +1,19 @@
+const User = require('../models/User');
+
 const signup_create = (req, res) => {
     res.render('signup');
 }
 
-const signup_store = (req, res) => {
+const signup_store = async(req, res) => {
     const {email, password} = req.body;
-    console.log(email, password);
-    res.send('new signup');
+
+    try {
+        const user = await User.create({email, password});
+        res.status(201).json(user);
+    } catch (error) {
+        console.log(error);
+        res.status(400).send('error, user not created');
+    }
 }
 
 const login_get = (req, res) => {
