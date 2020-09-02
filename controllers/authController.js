@@ -9,18 +9,13 @@ const handleErrors = (err) => {
     };
 
     // duplicate error code
-    if(err.code === 11000)
-    {
+    if (err.code === 11000) {
         error.email = 'That email is already registered!';
         return error;
     }
 
     // validation errors
     if (err.message.includes('user validation failed')) {
-        // console.log(Object.values(err.errors).forEach(error => {
-        //     console.log(error.properties.message);
-        // }));
-
         Object.values(err.errors).forEach(({
             properties
         }) => {
