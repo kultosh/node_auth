@@ -27,6 +27,13 @@ const handleErrors = (err) => {
     return error;
 }
 
+const maxAge = 3 * 24 * 60 * 60;
+const createToken = (id) => {
+    return jwt.sign({id}, 'kultosh secret', {
+        expiresIn: maxAge
+    })
+}
+
 const signup_create = (req, res) => {
     res.render('signup');
 }
@@ -42,7 +49,9 @@ const signup_store = async (req, res) => {
             email,
             password
         });
-        res.status(201).json(user);
+        const token = createToken(user._id);
+        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+        res.status(201).json({user: user._id});
     } catch (err) {
         const errors = handleErrors(err);
         res.status(400).json({
